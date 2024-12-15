@@ -1,13 +1,16 @@
 import svgToDataUri from "mini-svg-data-uri";
-import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
+import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
   theme: {
-    // rest of the code
+    extend: {
+      // You can extend the theme here as needed (e.g., colors, spacing, etc.)
+    }
   },
+  
   plugins: [
     addVariablesForColors,
     function ({ matchUtilities, theme }) {
@@ -31,13 +34,15 @@ export default {
         },
         { values: flattenColorPalette(theme("backgroundColor")), type: "color" }
       );
-    },
+    }
   ],
 };
 
 function addVariablesForColors({ addBase, theme }) {
-  let allColors = flattenColorPalette(theme("colors"));
-  let newVars = Object.fromEntries(Object.entries(allColors).map(([key, val]) => [`--${key}`, val]));
+  const allColors = flattenColorPalette(theme("colors"));
+  const newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
 
   addBase({
     ":root": newVars,
