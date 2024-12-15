@@ -63,7 +63,6 @@ const TransactionPage = () => {
 				category: data.transaction.category,
 				amount: data.transaction.amount,
 				location: data.transaction.location,
-				date: data.transaction.date,
 				date: new Date(+data.transaction.date).toISOString().substr(0, 10),
 			});
 		}
